@@ -3,17 +3,18 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ResidentInfo from './ResidentInfo';
 import cover from '../assets/image/coverRM.gif'
+
 const LocationRM = ({ location, setLocation }) => {
     /*states*/
     const [locations, setLocations] = useState([])
     const [showList, setShowList] = useState(false)
-    let [value, setValue] = useState('Type Id')
+    let [value, setValue] = useState('Type a location id')
 
     /*Functions*/
 
     const searchType = (e) => {
         const typeID = e.target.id
-        const valueKey = e.target.accessKey
+        const valueKey = e.target.textContent
         axios.get(`https://rickandmortyapi.com/api/location/${typeID}`)
             .then(res => setLocation(res.data))
             .then(() => setShowList(false))
@@ -45,7 +46,7 @@ const LocationRM = ({ location, setLocation }) => {
                             {
 
                                 locations.map(locationNow => (
-                                    <li id={locationNow.id} accessKey={locationNow.name} className='element-id' key={locationNow.name} onClick={e => searchType(e)}>Episode {locationNow.name}</li>
+                                    <li id={locationNow.id} className='element-id' key={locationNow.name} onClick={e => searchType(e)}>{locationNow.name}</li>
                                 ))
                             }
                         </ul>
